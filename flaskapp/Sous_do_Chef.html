@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+
+<head>
+
+  <meta charset="utf-8">
+
+  <script
+    src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+  </script>
+
+<link href="https://fonts.googleapis.com/css?family=Amiri|Cabin|Orbitron" rel="stylesheet">
+
+</head>
+
+<style type = "text/css">
+
+  body {
+    background-color: #FFF8DC;
+    width: 700px; margin: auto;
+  }
+  .welcome-message {
+    text-align: center;
+    font-family: 'Amiri';font-size: 22px;
+  }
+  .page-header {
+    font-size: 60px;
+    font-family: 'Orbitron';
+    font-weight: bold;
+    text-align: center;
+
+  }
+  .query-label {
+    font-size: 16px;
+    font-family: 'Orbitron';
+    font-size: 22px;
+  }
+  .query-field {
+    width: 600px;
+    height: 100px;
+    border-style: dashed;
+    border-width: 1px;
+    border-color: gray;
+    font-size: 12px;
+  }
+  .send-button {
+    height: 28px;
+    background-color: #5D6D7E;
+    font-size: 16px;
+    font-family: 'Amiri';
+    color: black;
+    font-weight: bold;
+    border: 2px solid #5D6D7E;
+  }
+  .send-button:hover {
+    background-color: #3769ba; /* Green */
+    color: white;
+}
+  .answer-label {
+    font-family: 'Orbitron';
+    font-size: 22px;
+  }
+  .response {
+    width: 600px;
+    height: 250px;
+    border-style: dashed;
+    border-width: 1px;
+    border-color: gray;
+    font-size: 16px;
+  }
+  ::-webkit-input-placeholder {
+    color: gray;
+  }
+</style>
+
+
+<body>
+
+  <br>
+  <br>
+  <label class="page-header">Sous-do Chef is Here to Save the Day! </label><br>
+  <br>
+
+<form>
+
+  <label class="welcome-message"
+  <p>Welcome! <br>
+  Confused in the kitchen? Ask me any culinary questions you have and
+  I'll see if Reddit's <a href="https://www.reddit.com/r/AskCulinary/">
+    r/askculinary</a> or <a href="https://www.reddit.com/r/cooking/">
+    r/cooking </a>  has an answer. You can ask me how to make guacamole or
+    the best sushi knives to get. Please be as descriptive as possible! 
+    <br>
+  </p>
+  </label>
+
+      <label class="query-label">Your question: </label>
+    <br>
+      <textarea class="query-field"
+        placeholder="Feed me your queries here"
+        id="question">
+      </textarea>
+      <br>
+
+      <input
+        class="send-button"
+        type="button"
+        value="SUBMIT"
+        onClick="getQuestion()"
+        />
+
+      <p class=""></p>
+
+  <br>
+<label class="answer-label">My sources tell me </label>
+<br>
+    <textarea class="response"
+      name="area"
+      id="answer"
+      readonly>
+    </textarea>
+</form>
+
+<script>
+
+function getQuestion() {
+  var userQuestion = document.getElementById("question").value;
+  // Remove newline characters
+  $.ajax({
+    type: "POST",
+    contentType: "application/json; charset=utf-8",
+    url: "/culinary",
+    dataType: "json",
+    async: false,
+    data: "{\"question\": [\""+userQuestion+"\"]}",
+    success: function(d) {
+      var answer = d.answer
+      document.getElementById("answer").value = answer
+      // console.log(userQuestion)
+    }
+  })
+}
+
+
+</script>
+
+</body>
